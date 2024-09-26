@@ -1,0 +1,50 @@
+.login-background-image {
+    background-image: url("./nadador.jpg");
+    background-position: center;
+    background-size: cover;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+}
+
+.login-container{
+    text-align: center;
+    justify-content: center;
+    background-color: white;
+    width: 35%;
+    height: 45%;
+}
+
+.login-title{
+    width: 100%;
+    font-weight: bold;
+    color: black;
+    padding: 30px 30px 10px;
+    margin-bottom: 20px;
+    text-align: left;
+    justify-items: left;
+    align-items: left;
+}
+
+.labels-container{
+    width: 100%;
+    padding: 10px 30px;
+    margin-bottom: 20px;
+    text-align: left;
+    justify-items: left;
+    align-items: left;
+    margin-top: 100 px;
+}
+
+.mb6{
+    padding-bottom: 20px;
+}
+
+
+.login-button{
+    padding-top: 10 px;
+    width: 60%;
+    text-align: center;
+    border-radius: 5px;
+}
+
