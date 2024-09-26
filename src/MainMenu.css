@@ -1,0 +1,28 @@
+
+.main-grid {
+    display: grid;
+    grid-template-rows: 1fr 4fr 1fr; /* 2 filas, la primera para el header */
+    grid-template-columns: 1fr; /* Una sola columna en el contenedor principal */
+    gap: 10px;
+    height: 100vh;
+  }
+  .main-grid-item {
+    padding: 10px;
+  }
+  .botton-grid-item{
+    padding: 30px;
+    background-color: rgb(79, 130, 130);
+  }
+
+  .titulo-grid{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 20px;
+    width: 100%;
+
+    .titulo{
+        text-align: center;
+        align-items: center;
+        justify-content: center;
+    }
+  }
