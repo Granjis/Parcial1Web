@@ -1,0 +1,33 @@
+.image-container {
+    width: 100% !important; 
+    max-width: 160px !important;
+    height: 200px !important; 
+    overflow: hidden !important; 
+    display: block;
+}
+
+.image-container img {
+    width: 150px !important;
+    height: 200px !important;
+    object-fit: cover !important;
+}
+
+.left-side{
+    padding-top:25px;
+    text-align: center;
+    justify-content: center;
+    align-self: center;
+    padding-left: 20px;
+    padding-right: 0;
+    color: white;
+    font-size: 40px;
+}
+
+.records{
+    text-align: center!important;
+    justify-content: center!important;
+    align-items: center !important;
+    color: white;
+    font-size: 40px;
+    overflow: hidden;
+}

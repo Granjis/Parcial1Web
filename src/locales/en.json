@@ -1,0 +1,10 @@
+{
+    "login":"Login",
+    "email":"Email",
+    "password":"Password",
+    "description":"Tour around the bay of",
+    "close":"Close",
+    "cycling":"Cycling",
+    "running":"Running",    
+    "swimming":"Swimming"
+}

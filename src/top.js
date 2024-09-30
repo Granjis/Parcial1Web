@@ -1,78 +1,140 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
-import "./top.css";
+import "./tarjeta.css";
+import nadador from "./nadador.jpg";
+import TarjetaDeporte from "./tarjetaDeporte";
 import React, { useState, useEffect } from 'react';
-import { Link } from "react-router-dom";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
+import { Modal, Button, Container, ModalBody } from "react-bootstrap";
+import { FormattedMessage } from 'react-intl'
+
+
 
 function Top() {
-    const [fotos, setFotos] = useState([]);
-    const [fotosRun, setFotosRun] = useState([]);
-    const [fotosSwim, setFotosSwim] = useState([]);
+    const [cycling, setCycling] = useState([]);
+    const [running, setRunning] = useState([]);
+    const [swimming, setSwimming] = useState([]);
+    const [mostrarModal, setMostrarModal] = useState(false);
+    const [deporteSeleccionado, setDeporteSeleccionado] = useState({});
 
-    const cargarImagen = () => {
-        fetch("https://img.redbull.com/images/c_crop,x_940,y_0,h_3264,w_2611/c_fill,w_450,h_600/q_auto:low,f_auto/redbullcom/2018/11/27/325118c5-1118-4dfb-82b5-4e5958acaa40/red-bull-zera-o-pico-2018-guaratinga-brasil")
-            .then(data => data.blob())
-            .then(blob => {
-                const nuevaImagen = URL.createObjectURL(blob);
-                setFotos(prevFotos => [...prevFotos, nuevaImagen]);
-            });
+    const handleClose = () => setMostrarModal(false);
+    const handleShow = (deporte) => {
+        setDeporteSeleccionado(deporte);
+        setMostrarModal(true);
     }
-
-    const cargarImagenRunning = () => {
-        fetch("https://hips.hearstapps.com/hmg-prod/images/gettyimages-1341854189-6540f8266a2ef.jpg")
-            .then(data => data.blob())
-            .then(blob => {
-                const nuevaImagen = URL.createObjectURL(blob);
-                setFotosRun(prevFotos => [...prevFotos, nuevaImagen]);
-            });
+    const update = (data, deporte, pImagen) => {
+        if (deporte === 'running') {
+            return data.map(item => ({
+                ...item,
+                titulo: "Running Session",
+                descripcion: "Recorrido alrededor de la Bahía",
+                imagen: pImagen,
+            }))
+        }
+        else if (deporte === 'cycling') {
+            return data.map(item => ({
+                ...item,
+                titulo: "Cycling Session",
+                descripcion: "Recorrido alrededor de la Bahía",
+                imagen: pImagen,
+            }))
+        }
+        else {
+            return data.map(item => ({
+                ...item,
+                titulo: "Swimming Session",
+                descripcion: "Recorrido alrededor de la Bahía",
+                imagen: pImagen,
+            }))
+        }
     }
-    const cargarImagenSwimming = () => {
-        fetch("https://images.unsplash.com/photo-1534289692684-c02577d5560d?q=80&w=2970&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D")
-            .then(data => data.blob())
-            .then(blob => {
-                const nuevaImagen = URL.createObjectURL(blob);
-                setFotosSwim(prevFotos => [...prevFotos, nuevaImagen]);
-            });
-    }
-
 
 
     useEffect(() => {
-        for (let i = 0; i < 10; i++) {
-            cargarImagen();
-            cargarImagenRunning();
-            cargarImagenSwimming(); 
-        }
+
+        let imagenCycling = "";
+        fetch("https://img.redbull.com/images/c_crop,x_940,y_0,h_3264,w_2611/c_fill,w_450,h_600/q_auto:low,f_auto/redbullcom/2018/11/27/325118c5-1118-4dfb-82b5-4e5958acaa40/red-bull-zera-o-pico-2018-guaratinga-brasil")
+            .then(data => data.blob())
+            .then(blob => { imagenCycling = window.URL.createObjectURL(blob) })
+
+        let imagenRunning = "";
+        fetch("https://hips.hearstapps.com/hmg-prod/images/gettyimages-1341854189-6540f8266a2ef.jpg")
+            .then(data => data.blob())
+            .then(blob => { imagenRunning = window.URL.createObjectURL(blob) })
+
+        let mockarooApiKey = 'af0d4e80';
+        const URL =
+            `https://my.api.mockaroo.com/users.json?key=${mockarooApiKey}`;
+        fetch(URL)
+            .then((data) => data.json())
+            .then((data) => {
+                setRunning(update(data, 'running', imagenRunning));
+                setCycling(update(data, 'cycling', imagenCycling));
+                setSwimming(update(data, 'swimming', nadador));
+            });
     }, []);
 
 
+
+
     return (
-        <div className='grid3'>
-            <div className='inside-grid'>
 
-                {fotos.map((url, index) => (
 
-                    <img key={index} className="imagen" src={url} alt={"No cargo"} />
+        <Row  >
+            <Col md={4} xs={6} >
+                <Row >
+                    {cycling.map((tarjetaDeporte) => (
+                        <Col key={tarjetaDeporte.id} md={6} sm={6} xs={6} onClick={() => handleShow(tarjetaDeporte)} >
+                            <TarjetaDeporte tarjetaDeporte={tarjetaDeporte} />
+                        </Col>
+                    ))}
+                </Row>
+            </Col>
 
-                ))}
-            </div>
+            <Col md={4} xs={6}>
+                <Row>
+                    {running.map((tarjetaDeporte) => (
+                        <Col key={tarjetaDeporte.id} md={6} sm={6} xs={6} onClick={() => handleShow(tarjetaDeporte)} >
+                            <TarjetaDeporte tarjetaDeporte={tarjetaDeporte} />
+                        </Col>
+                    ))}
+                </Row>
 
-            <div className='inside-grid'>
-                {fotosRun.map((url, index) => (
+            </Col>
 
-                    <img key={index} className="imagen" src={url} alt={"No cargo"} />
+            <Col md={4} xs={6}>
+                <Row>
+                    {swimming.map((tarjetaDeporte) => (
+                        <Col key={tarjetaDeporte.id} md={6} sm={6} xs={6} onClick={() => handleShow(tarjetaDeporte)} >
 
-                ))}
-            </div>
+                            <TarjetaDeporte tarjetaDeporte={tarjetaDeporte} />
+                        </Col>
+                    ))}
+                </Row>
 
-            <div className='inside-grid'>
-                {fotosSwim.map((url, index) => (
-
-                    <img key={index} className="imagen" src={url} alt={"No cargo"} />
-
-                ))}
-            </div>
-        </div>
+            </Col>
+            <Modal show={mostrarModal} onHide={handleClose} >
+                <ModalBody className='modal-card-container'>
+                    <div>
+                        <img className="modal-card-img"
+                            src={deporteSeleccionado.imagen}
+                            alt={deporteSeleccionado.descripcion}
+                        />
+                        <div className='texto-imagen'>
+                            <h1 class="fw-bold">
+                                {deporteSeleccionado.titulo}
+                            </h1>
+                            <p > <FormattedMessage id='description'/>{deporteSeleccionado.ciudad}<br /> {deporteSeleccionado.distancia + "k -" + deporteSeleccionado.duracion + "h"}</p>
+                        </div>
+                    </div>
+                    <div className='but'>
+                        <Button variant="primary" onClick={handleClose} >
+                          <FormattedMessage id='close'/>
+                        </Button>
+                    </div>
+                </ModalBody>
+            </Modal>
+        </Row>
     );
-
 }
 export default Top;

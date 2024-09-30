@@ -6,6 +6,7 @@ import Row from "react-bootstrap/Row";
 import Container from "react-bootstrap/Container";
 import Button from 'react-bootstrap/Button';
 import { useNavigate } from 'react-router-dom';
+import { FormattedMessage } from 'react-intl';
 
 function Login() {
 
@@ -42,10 +43,6 @@ function Login() {
     const clickLogin = (() => {
 
         const errors = [];
-        if (valoresCampos.email === "" || valoresCampos.password === "") {
-            alert("Fill all the fields")
-        }
-        else {
             if (!validesCampos.emailState) {
                 errors.push("Email is not valid")
             
@@ -55,12 +52,12 @@ function Login() {
                 errors.push("Password is not valid")
             }
             if (errors.length > 0) {
-                alert(errors.join("\n"));
+               
             } else {
                 navigate("/mainMenu")
           
             }
-        }
+        
 
     });
 
@@ -71,24 +68,30 @@ function Login() {
 
             <Container className="login-container">
                 <Row>
-                    <h1 className="login-title">  Log in</h1>
+                    <h1 className="login-title">  
+                            < FormattedMessage id="login"/>
+                        </h1>
                 </Row>
                 <Row>
                     <Container className='labels-container'>
 
                         <Form>
                             <Form.Group className='mb6' controlId='formEmail'>
-                                <Form.Label> Email </Form.Label>
+                                <Form.Label> 
+                                < FormattedMessage id="email"/>
+                                     </Form.Label>
                                 <Form.Control type='email' onChange={handleEmailChange} value={valoresCampos.email} className={!validesCampos.emailState ? 'is-invalid' : ''} />
                             </Form.Group>
 
                             <Form.Group className='mb6' controlId='formPassword'>
-                                <Form.Label> Password </Form.Label>
+                                <Form.Label> 
+                                    <FormattedMessage id="password"/>
+                                     </Form.Label>
                                 <Form.Control type='password' onChange={handlePasswordChange} value={valoresCampos.password} className={!validesCampos.passwordState ? 'is-invalid' : ''} />
                             </Form.Group>
 
                             <Button variant="primary" onClick={clickLogin} className='login-button'>
-                                Log in
+                               <FormattedMessage id="login"/>
                             </Button>
 
                         </Form>
